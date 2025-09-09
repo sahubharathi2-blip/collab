@@ -3,217 +3,164 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Manga Artist Dashboard</title>
+  <title>Manga Artist Collection</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
-      transition: background-color 0.3s, color 0.3s;
+      background-color: #ffffff;
+      color: #222;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
     }
 
     header {
-      background-color: #292b2c;
+      background-color: #20232a;
       color: white;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 1.5rem;
-    }
-
-    .toggle-theme {
-      cursor: pointer;
-      background: none;
-      border: 1px solid white;
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 5px;
-    }
-
-    .container {
-      padding: 2rem;
-    }
-
-    .search-bar {
-      margin-bottom: 1.5rem;
-      display: flex;
-      justify-content: center;
-    }
-
-    .search-bar input {
-      width: 300px;
-      padding: 0.5rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
-      background-color: white;
       padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
+      text-align: center;
     }
 
-    .card:hover {
-      transform: translateY(-5px);
+    .main {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
     }
 
-    .card h2 {
-      margin-top: 0;
+    .sidebar {
+      width: 250px;
+      background-color: #f4f4f4;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      margin: 1rem;
       font-size: 1.2rem;
+      color: #333;
     }
 
-    .collection-list {
-      list-style-type: disc;
-      margin-left: 1.2rem;
+    .artist-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
 
-    /* Dark theme */
-    body.dark {
-      background-color: #1e1e1e;
-      color: #f0f0f0;
+    .artist-list li {
+      padding: 1rem;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+      transition: background-color 0.2s;
     }
 
-    body.dark header {
-      background-color: #111;
+    .artist-list li:hover {
+      background-color: #e0e0e0;
     }
 
-    body.dark .card {
-      background-color: #2b2b2b;
+    .artist-list li.active {
+      background-color: #ddd;
+      font-weight: bold;
     }
 
-    body.dark .search-bar input {
-      background-color: #333;
-      color: white;
-      border: 1px solid #555;
+    .content {
+      flex: 1;
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .artist-name {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .manga-list {
+      list-style: none;
+      padding-left: 1rem;
+    }
+
+    .manga-list li {
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      .main {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .content {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Manga Artists Dashboard</h1>
-    <button class="toggle-theme">Toggle Theme</button>
+    <h1>Manga Artists & Their Collections</h1>
   </header>
 
-  <div class="container">
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search artist or manga..." />
+  <div class="main">
+    <div class="sidebar">
+      <h2>Artists</h2>
+      <ul class="artist-list" id="artistList">
+        <!-- Artist list items will be injected here -->
+      </ul>
     </div>
-
-    <div class="card-grid" id="artistGrid">
-      <!-- Cards will be inserted here dynamically -->
+    <div class="content" id="artistContent">
+      <p>Select an artist to view their manga collection.</p>
     </div>
   </div>
 
   <script>
     const artists = [
-      {
-        name: "Eiichiro Oda",
-        mangas: ["One Piece"]
-      },
-      {
-        name: "Masashi Kishimoto",
-        mangas: ["Naruto", "Samurai 8"]
-      },
-      {
-        name: "Akira Toriyama",
-        mangas: ["Dragon Ball", "Dr. Slump"]
-      },
-      {
-        name: "Naoko Takeuchi",
-        mangas: ["Sailor Moon"]
-      },
-      {
-        name: "Kentaro Miura",
-        mangas: ["Berserk"]
-      },
-      {
-        name: "Tite Kubo",
-        mangas: ["Bleach", "Burn the Witch"]
-      },
-      {
-        name: "Hajime Isayama",
-        mangas: ["Attack on Titan"]
-      },
-      {
-        name: "Rumiko Takahashi",
-        mangas: ["Inuyasha", "Ranma ½", "Urusei Yatsura"]
-      },
-      {
-        name: "Yoshihiro Togashi",
-        mangas: ["Yu Yu Hakusho", "Hunter x Hunter"]
-      }
+      { name: "Eiichiro Oda", mangas: ["One Piece"] },
+      { name: "Masashi Kishimoto", mangas: ["Naruto", "Samurai 8"] },
+      { name: "Akira Toriyama", mangas: ["Dragon Ball", "Dr. Slump"] },
+      { name: "Naoko Takeuchi", mangas: ["Sailor Moon"] },
+      { name: "Kentaro Miura", mangas: ["Berserk"] },
+      { name: "Tite Kubo", mangas: ["Bleach", "Burn the Witch"] },
+      { name: "Hajime Isayama", mangas: ["Attack on Titan"] },
+      { name: "Rumiko Takahashi", mangas: ["Inuyasha", "Ranma ½", "Urusei Yatsura"] },
+      { name: "Yoshihiro Togashi", mangas: ["Yu Yu Hakusho", "Hunter x Hunter"] }
     ];
 
-    const grid = document.getElementById('artistGrid');
-    const searchInput = document.getElementById('searchInput');
+    const artistList = document.getElementById("artistList");
+    const artistContent = document.getElementById("artistContent");
 
-    function renderArtists(filter = "") {
-      grid.innerHTML = "";
+    // Render sidebar list
+    artists.forEach((artist, index) => {
+      const li = document.createElement("li");
+      li.textContent = artist.name;
+      li.addEventListener("click", () => showArtist(index));
+      artistList.appendChild(li);
+    });
 
-      const filtered = artists.filter(artist => {
-        const fullText = (artist.name + " " + artist.mangas.join(" ")).toLowerCase();
-        return fullText.includes(filter.toLowerCase());
-      });
+    // Show artist details
+    function showArtist(index) {
+      const selected = artists[index];
 
-      if (filtered.length === 0) {
-        grid.innerHTML = "<p>No artists found.</p>";
-        return;
-      }
+      // Remove active class from all
+      const lis = document.querySelectorAll('.artist-list li');
+      lis.forEach(li => li.classList.remove('active'));
+      lis[index].classList.add('active');
 
-      filtered.forEach(artist => {
-        const card = document.createElement("div");
-        card.className = "card";
-
-        const name = document.createElement("h2");
-        name.textContent = artist.name;
-
-        const list = document.createElement("ul");
-        list.className = "collection-list";
-        artist.mangas.forEach(manga => {
-          const li = document.createElement("li");
-          li.textContent = manga;
-          list.appendChild(li);
-        });
-
-        card.appendChild(name);
-        card.appendChild(list);
-
-        grid.appendChild(card);
-      });
+      artistContent.innerHTML = `
+        <div class="artist-name">${selected.name}</div>
+        <h3>Manga Collection:</h3>
+        <ul class="manga-list">
+          ${selected.mangas.map(m => `<li>${m}</li>`).join('')}
+        </ul>
+      `;
     }
-
-    // Initial render
-    renderArtists();
-
-    // Search functionality
-    searchInput.addEventListener("input", (e) => {
-      renderArtists(e.target.value);
-    });
-
-    // Theme toggle
-    const toggleBtn = document.querySelector('.toggle-theme');
-    toggleBtn.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-    });
   </script>
 
 </body>
