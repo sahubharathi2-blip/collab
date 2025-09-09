@@ -1,236 +1,272 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Delicious Food & Tastes Dashboard</title>
+  <title>Gourmet Restaurant Menu</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
     /* Reset */
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0; box-sizing: border-box;
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #fceabb, #f8b500, #f76c5e);
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      background-color: #fafafa;
+      color: #333;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      color: #3a1a00;
+      align-items: center;
+      padding: 2rem 1rem;
     }
 
     header {
-      background: rgba(255 255 255 / 0.85);
-      padding: 2.5rem 1rem;
-      text-align: center;
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: #78290f;
-      letter-spacing: 2px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      user-select: none;
-      text-shadow: 1px 1px 3px rgba(255 255 255 / 0.9);
-    }
-
-    .search-bar {
-      margin: 2rem auto;
-      max-width: 480px;
-      text-align: center;
-    }
-
-    .search-bar input {
+      max-width: 900px;
       width: 100%;
-      padding: 1rem 1.5rem;
-      font-size: 1.2rem;
-      border-radius: 50px;
-      border: none;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: box-shadow 0.3s ease;
+      text-align: center;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 1rem;
+    }
+
+    header h1 {
+      font-weight: 900;
+      font-size: 2.8rem;
+      color: #2c2c2c;
+      letter-spacing: 2px;
+      font-family: 'Georgia', serif;
+    }
+
+    header p {
+      color: #777;
+      margin-top: 0.5rem;
+      font-style: italic;
+      font-size: 1.1rem;
+    }
+
+    .search-container {
+      max-width: 900px;
+      width: 100%;
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-container input {
+      width: 100%;
+      max-width: 480px;
+      padding: 12px 18px;
+      font-size: 1.1rem;
+      border: 1.8px solid #bbb;
+      border-radius: 30px;
       outline: none;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
     }
 
-    .search-bar input::placeholder {
-      color: #b65c1a;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    .search-bar input:focus {
-      box-shadow: 0 0 20px 3px #f76c5e;
+    .search-container input:focus {
+      border-color: #b85c38;
+      box-shadow: 0 0 10px rgba(184,92,56,0.3);
     }
 
     main {
-      flex-grow: 1;
-      max-width: 1100px;
-      margin: 0 auto 3rem auto;
-      padding: 0 1rem;
+      max-width: 900px;
+      width: 100%;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
     }
 
-    .card {
-      background: #fff1db;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(199, 119, 58, 0.25);
+    .menu-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.07);
+      padding: 1.8rem 2rem;
       display: flex;
       flex-direction: column;
-      padding: 2rem 1.8rem;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: default;
-      position: relative;
-      overflow: hidden;
     }
 
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 18px 40px rgba(199, 119, 58, 0.4);
+    .menu-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 28px rgba(0,0,0,0.15);
     }
 
-    .card::before {
-      content: "🍽️";
-      font-size: 3.5rem;
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      opacity: 0.15;
-      user-select: none;
-      pointer-events: none;
-    }
-
-    .food-name {
-      font-size: 1.7rem;
-      font-weight: 900;
-      color: #a44200;
-      margin-bottom: 0.8rem;
-      text-transform: capitalize;
-      letter-spacing: 0.02em;
-      user-select: text;
-    }
-
-    .food-category {
-      display: inline-block;
-      background-color: #f76c5e;
-      color: white;
-      font-weight: 700;
-      padding: 0.35rem 1rem;
-      border-radius: 30px;
+    .category-label {
       font-size: 0.85rem;
-      letter-spacing: 0.03em;
-      margin-bottom: 1.2rem;
+      font-weight: 700;
+      color: #b85c38;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 0.8rem;
+      font-family: 'Courier New', Courier, monospace;
       user-select: none;
-      box-shadow: 0 3px 8px rgba(247,108,94,0.7);
     }
 
-    .taste-desc {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #5a2d00;
+    .dish-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #2c2c2c;
+      margin-bottom: 0.4rem;
+      line-height: 1.2;
+    }
+
+    .dish-desc {
+      font-size: 1rem;
+      color: #555;
       flex-grow: 1;
-      user-select: text;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+
+    .price {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #b85c38;
+      align-self: flex-end;
+      user-select: none;
     }
 
     .no-results {
-      grid-column: 1 / -1;
+      grid-column: 1/-1;
+      font-style: italic;
+      color: #999;
+      font-size: 1.3rem;
       text-align: center;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: #7f3300;
-      padding: 4rem 1rem;
+      padding: 3rem 1rem;
       user-select: none;
     }
 
-    @media (max-width: 600px) {
-      header {
+    @media (max-width: 480px) {
+      header h1 {
         font-size: 2rem;
-        padding: 2rem 1rem;
       }
 
-      .food-name {
-        font-size: 1.4rem;
-      }
-
-      .taste-desc {
-        font-size: 1rem;
+      main {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-
   <header>
-    🍲 Delicious Food & Tastes Dashboard
+    <h1>Gourmet Restaurant Menu</h1>
+    <p>Discover our delicious food collections and exquisite tastes</p>
   </header>
 
-  <div class="search-bar">
+  <div class="search-container">
     <input
-      id="searchInput"
       type="search"
-      placeholder="Search food, category or taste..."
-      aria-label="Search food, category or taste"
+      id="searchInput"
+      placeholder="Search dishes or tastes..."
+      aria-label="Search dishes or tastes"
     />
   </div>
 
-  <main id="foodGrid" role="list">
-    <!-- Food cards will appear here -->
+  <main id="menuGrid" role="list">
+    <!-- Menu cards go here -->
   </main>
 
   <script>
-    const foods = [
-      { name: "Mango", category: "Fruit", taste: "Sweet, tropical, juicy" },
-      { name: "Lemon", category: "Fruit", taste: "Sour, tangy, refreshing" },
-      { name: "Chocolate Cake", category: "Dessert", taste: "Sweet, rich, creamy" },
-      { name: "Spaghetti Bolognese", category: "Main Course", taste: "Savory, hearty, meaty" },
-      { name: "Sushi", category: "Main Course", taste: "Umami, fresh, slightly salty" },
-      { name: "Green Tea", category: "Beverage", taste: "Bitter, earthy, calming" },
-      { name: "Vanilla Ice Cream", category: "Dessert", taste: "Sweet, creamy, smooth" },
-      { name: "Strawberry", category: "Fruit", taste: "Sweet, slightly tart, juicy" },
-      { name: "Coffee", category: "Beverage", taste: "Bitter, robust, aromatic" },
-      { name: "Garlic Bread", category: "Appetizer", taste: "Savory, buttery, garlicky" },
-      { name: "Caesar Salad", category: "Appetizer", taste: "Tangy, fresh, creamy" },
-      { name: "Pad Thai", category: "Main Course", taste: "Sweet, tangy, savory" },
-      { name: "Miso Soup", category: "Soup", taste: "Umami, salty, soothing" }
+    const menuItems = [
+      {
+        name: "Truffle Mushroom Risotto",
+        category: "Main Course",
+        description: "Creamy Arborio rice cooked with wild mushrooms and truffle oil.",
+        price: "$24",
+      },
+      {
+        name: "Grilled Atlantic Salmon",
+        category: "Main Course",
+        description: "Fresh salmon fillet grilled to perfection with lemon butter sauce.",
+        price: "$29",
+      },
+      {
+        name: "Classic Caesar Salad",
+        category: "Appetizer",
+        description: "Romaine lettuce tossed with Caesar dressing, parmesan, and croutons.",
+        price: "$12",
+      },
+      {
+        name: "Bruschetta al Pomodoro",
+        category: "Appetizer",
+        description: "Grilled bread topped with marinated tomatoes, garlic, and basil.",
+        price: "$10",
+      },
+      {
+        name: "Chocolate Lava Cake",
+        category: "Dessert",
+        description: "Warm chocolate cake with a molten chocolate center, served with vanilla ice cream.",
+        price: "$14",
+      },
+      {
+        name: "Crème Brûlée",
+        category: "Dessert",
+        description: "Rich custard topped with a caramelized sugar crust.",
+        price: "$13",
+      },
+      {
+        name: "Espresso",
+        category: "Beverage",
+        description: "Strong and bold espresso shot made from freshly ground coffee beans.",
+        price: "$5",
+      },
+      {
+        name: "Herbal Iced Tea",
+        category: "Beverage",
+        description: "Refreshing iced tea infused with herbs and lemon.",
+        price: "$6",
+      },
+      {
+        name: "Lobster Bisque",
+        category: "Soup",
+        description: "Smooth and creamy lobster bisque with a hint of brandy.",
+        price: "$18",
+      },
+      {
+        name: "French Onion Soup",
+        category: "Soup",
+        description: "Traditional onion soup topped with melted Gruyère cheese.",
+        price: "$15",
+      }
     ];
 
-    const foodGrid = document.getElementById('foodGrid');
+    const menuGrid = document.getElementById('menuGrid');
     const searchInput = document.getElementById('searchInput');
 
-    function renderFoods(filter = '') {
-      foodGrid.innerHTML = '';
-      const filtered = foods.filter(food => {
-        const text = `${food.name} ${food.category} ${food.taste}`.toLowerCase();
+    function renderMenu(filter = '') {
+      menuGrid.innerHTML = '';
+      const filtered = menuItems.filter(item => {
+        const text = `${item.name} ${item.category} ${item.description}`.toLowerCase();
         return text.includes(filter.toLowerCase());
       });
 
       if (filtered.length === 0) {
-        foodGrid.innerHTML = `<div class="no-results" role="alert">😞 No matching food items found.</div>`;
+        menuGrid.innerHTML = `<div class="no-results" role="alert">No dishes match your search.</div>`;
         return;
       }
 
-      filtered.forEach(food => {
+      filtered.forEach(item => {
         const card = document.createElement('article');
-        card.className = 'card';
+        card.className = 'menu-card';
         card.setAttribute('role', 'listitem');
         card.innerHTML = `
-          <span class="food-category">${food.category}</span>
-          <h2 class="food-name">${food.name}</h2>
-          <p class="taste-desc">${food.taste}</p>
+          <div class="category-label">${item.category}</div>
+          <h2 class="dish-name">${item.name}</h2>
+          <p class="dish-desc">${item.description}</p>
+          <div class="price">${item.price}</div>
         `;
-        foodGrid.appendChild(card);
+        menuGrid.appendChild(card);
       });
     }
 
     searchInput.addEventListener('input', e => {
-      renderFoods(e.target.value);
+      renderMenu(e.target.value);
     });
 
-    // Initial render
-    renderFoods();
+    renderMenu();
   </script>
-
 </body>
 </html>
