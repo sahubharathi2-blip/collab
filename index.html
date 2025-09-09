@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Manga Artist Dashboard</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Food & Tastes Dashboard</title>
   <style>
-    /* Base reset */
+    /* Reset */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,117 +13,117 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(145deg, #f8f9fa, #e9ecef);
-      color: #212529;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #fff8f0;
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
-      background: linear-gradient(to right, #6a11cb, #2575fc);
+      background: linear-gradient(90deg, #fbc2eb, #a6c1ee);
       padding: 2rem;
-      color: white;
+      color: #fff;
       text-align: center;
+      font-weight: 700;
       font-size: 2rem;
-      font-weight: bold;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      user-select: none;
     }
 
     .search-bar {
-      margin: 2rem auto;
+      padding: 1.5rem 2rem;
       text-align: center;
+      background-color: #fff3f8;
     }
 
     .search-bar input {
-      padding: 0.8rem 1.2rem;
-      border-radius: 30px;
-      border: none;
-      width: 300px;
-      max-width: 80%;
+      padding: 0.8rem 1rem;
+      width: 320px;
+      max-width: 90%;
       font-size: 1rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: 2px solid #fbc2eb;
+      border-radius: 50px;
+      outline: none;
       transition: 0.3s ease;
     }
 
     .search-bar input:focus {
-      outline: none;
-      transform: scale(1.03);
-      box-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
+      border-color: #a6c1ee;
+      box-shadow: 0 0 8px #a6c1ee;
     }
 
-    .grid {
+    main {
+      flex-grow: 1;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      padding: 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
+      gap: 1.8rem;
     }
 
     .card {
       background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.07);
-      transition: transform 0.3s, box-shadow 0.3s;
+      border-radius: 16px;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
     }
 
     .card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
 
-    .card-header {
-      height: 160px;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-    }
-
-    .card-body {
-      padding: 1.5rem;
-    }
-
-    .card-body h3 {
+    .food-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #d6336c;
       margin-bottom: 0.5rem;
-      color: #343a40;
     }
 
-    .card-body ul {
-      list-style-type: disc;
-      padding-left: 1.2rem;
-      margin: 0.5rem 0;
-    }
-
-    .tags {
-      margin-top: 0.75rem;
-    }
-
-    .tag {
+    .food-category {
       display: inline-block;
-      background-color: #2575fc;
-      color: white;
+      background-color: #fbc2eb;
+      color: #721c24;
+      font-weight: 600;
       padding: 0.3rem 0.8rem;
-      margin: 0.2rem;
-      font-size: 0.75rem;
-      border-radius: 30px;
+      border-radius: 25px;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      align-self: flex-start;
+      user-select: none;
+    }
+
+    .taste-desc {
+      font-size: 1rem;
+      color: #555;
+      flex-grow: 1;
+      line-height: 1.4;
     }
 
     .no-results {
+      grid-column: 1/-1;
       text-align: center;
-      font-size: 1.2rem;
-      color: #6c757d;
-      padding: 2rem;
+      font-size: 1.3rem;
+      color: #999;
+      padding: 3rem 0;
+      user-select: none;
     }
 
     @media (max-width: 600px) {
       header {
         font-size: 1.5rem;
-        padding: 1.5rem;
+        padding: 1.5rem 1rem;
+      }
+
+      .card {
+        padding: 1rem;
       }
     }
   </style>
@@ -131,110 +131,67 @@
 <body>
 
   <header>
-    Manga Artist & Collection Dashboard 🎨
+    🍲 Food & Their Tastes Dashboard
   </header>
 
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search artist or manga...">
+    <input type="text" id="searchInput" placeholder="Search food or taste..." aria-label="Search food or taste" />
   </div>
 
-  <div class="grid" id="artistGrid">
-    <!-- JS-generated content -->
-  </div>
+  <main id="foodGrid">
+    <!-- Food cards dynamically inserted here -->
+  </main>
 
   <script>
-    const artists = [
-      {
-        name: "Eiichiro Oda",
-        mangas: ["One Piece"],
-        tags: ["Shonen", "Adventure"]
-      },
-      {
-        name: "Masashi Kishimoto",
-        mangas: ["Naruto", "Samurai 8"],
-        tags: ["Shonen", "Action"]
-      },
-      {
-        name: "Akira Toriyama",
-        mangas: ["Dragon Ball", "Dr. Slump"],
-        tags: ["Shonen", "Comedy"]
-      },
-      {
-        name: "Naoko Takeuchi",
-        mangas: ["Sailor Moon"],
-        tags: ["Shojo", "Magical Girl"]
-      },
-      {
-        name: "Kentaro Miura",
-        mangas: ["Berserk"],
-        tags: ["Seinen", "Dark Fantasy"]
-      },
-      {
-        name: "Tite Kubo",
-        mangas: ["Bleach", "Burn the Witch"],
-        tags: ["Shonen", "Supernatural"]
-      },
-      {
-        name: "Hajime Isayama",
-        mangas: ["Attack on Titan"],
-        tags: ["Seinen", "Apocalyptic"]
-      },
-      {
-        name: "Rumiko Takahashi",
-        mangas: ["Inuyasha", "Ranma ½", "Urusei Yatsura"],
-        tags: ["Romance", "Fantasy"]
-      },
-      {
-        name: "Yoshihiro Togashi",
-        mangas: ["Yu Yu Hakusho", "Hunter x Hunter"],
-        tags: ["Shonen", "Psychological"]
-      }
+    const foods = [
+      { name: "Mango", category: "Fruit", taste: "Sweet, tropical, juicy" },
+      { name: "Lemon", category: "Fruit", taste: "Sour, tangy, refreshing" },
+      { name: "Chocolate Cake", category: "Dessert", taste: "Sweet, rich, creamy" },
+      { name: "Spaghetti Bolognese", category: "Main Course", taste: "Savory, hearty, meaty" },
+      { name: "Sushi", category: "Main Course", taste: "Umami, fresh, slightly salty" },
+      { name: "Green Tea", category: "Beverage", taste: "Bitter, earthy, calming" },
+      { name: "Vanilla Ice Cream", category: "Dessert", taste: "Sweet, creamy, smooth" },
+      { name: "Strawberry", category: "Fruit", taste: "Sweet, slightly tart, juicy" },
+      { name: "Coffee", category: "Beverage", taste: "Bitter, robust, aromatic" },
+      { name: "Garlic Bread", category: "Appetizer", taste: "Savory, buttery, garlicky" },
+      { name: "Caesar Salad", category: "Appetizer", taste: "Tangy, fresh, creamy" },
+      { name: "Pad Thai", category: "Main Course", taste: "Sweet, tangy, savory" },
+      { name: "Miso Soup", category: "Soup", taste: "Umami, salty, soothing" }
     ];
 
-    const grid = document.getElementById("artistGrid");
-    const searchInput = document.getElementById("searchInput");
+    const grid = document.getElementById('foodGrid');
+    const searchInput = document.getElementById('searchInput');
 
-    function renderArtists(filter = "") {
-      grid.innerHTML = "";
-
-      const filtered = artists.filter(artist => {
-        const text = artist.name + " " + artist.mangas.join(" ") + " " + artist.tags.join(" ");
-        return text.toLowerCase().includes(filter.toLowerCase());
+    function renderFoods(filter = '') {
+      grid.innerHTML = '';
+      const filteredFoods = foods.filter(food => {
+        const combined = (food.name + ' ' + food.category + ' ' + food.taste).toLowerCase();
+        return combined.includes(filter.toLowerCase());
       });
 
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div class="no-results">😢 No results found.</div>`;
+      if (filteredFoods.length === 0) {
+        grid.innerHTML = `<div class="no-results">😞 No matching food items found.</div>`;
         return;
       }
 
-      filtered.forEach(artist => {
-        const card = document.createElement("div");
-        card.className = "card";
-
+      filteredFoods.forEach(food => {
+        const card = document.createElement('article');
+        card.className = 'card';
         card.innerHTML = `
-          <div class="card-header">${artist.name}</div>
-          <div class="card-body">
-            <h3>Manga Titles</h3>
-            <ul>
-              ${artist.mangas.map(m => `<li>${m}</li>`).join("")}
-            </ul>
-            <div class="tags">
-              ${artist.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
-            </div>
-          </div>
+          <span class="food-category">${food.category}</span>
+          <h2 class="food-name">${food.name}</h2>
+          <p class="taste-desc">${food.taste}</p>
         `;
-
         grid.appendChild(card);
       });
     }
 
-    searchInput.addEventListener("input", () => {
-      renderArtists(searchInput.value);
+    searchInput.addEventListener('input', e => {
+      renderFoods(e.target.value);
     });
 
-    // Initial load
-    renderArtists();
+    // Initial render
+    renderFoods();
   </script>
-
 </body>
 </html>
