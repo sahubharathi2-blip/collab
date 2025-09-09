@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Food & Tastes Dashboard</title>
+  <title>Delicious Food & Tastes Dashboard</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
     /* Reset */
     * {
       box-sizing: border-box;
@@ -13,117 +15,147 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #fff8f0;
-      color: #333;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fceabb, #f8b500, #f76c5e);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      color: #3a1a00;
     }
 
     header {
-      background: linear-gradient(90deg, #fbc2eb, #a6c1ee);
-      padding: 2rem;
-      color: #fff;
+      background: rgba(255 255 255 / 0.85);
+      padding: 2.5rem 1rem;
       text-align: center;
-      font-weight: 700;
-      font-size: 2rem;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #78290f;
+      letter-spacing: 2px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       user-select: none;
+      text-shadow: 1px 1px 3px rgba(255 255 255 / 0.9);
     }
 
     .search-bar {
-      padding: 1.5rem 2rem;
+      margin: 2rem auto;
+      max-width: 480px;
       text-align: center;
-      background-color: #fff3f8;
     }
 
     .search-bar input {
-      padding: 0.8rem 1rem;
-      width: 320px;
-      max-width: 90%;
-      font-size: 1rem;
-      border: 2px solid #fbc2eb;
+      width: 100%;
+      padding: 1rem 1.5rem;
+      font-size: 1.2rem;
       border-radius: 50px;
+      border: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s ease;
       outline: none;
-      transition: 0.3s ease;
+    }
+
+    .search-bar input::placeholder {
+      color: #b65c1a;
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
 
     .search-bar input:focus {
-      border-color: #a6c1ee;
-      box-shadow: 0 0 8px #a6c1ee;
+      box-shadow: 0 0 20px 3px #f76c5e;
     }
 
     main {
       flex-grow: 1;
-      max-width: 1200px;
-      margin: 2rem auto;
+      max-width: 1100px;
+      margin: 0 auto 3rem auto;
       padding: 0 1rem;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.8rem;
+      gap: 2rem;
     }
 
     .card {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: default;
+      background: #fff1db;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(199, 119, 58, 0.25);
       display: flex;
       flex-direction: column;
-      padding: 1.5rem;
+      padding: 2rem 1.8rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
     }
 
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      transform: translateY(-10px);
+      box-shadow: 0 18px 40px rgba(199, 119, 58, 0.4);
+    }
+
+    .card::before {
+      content: "🍽️";
+      font-size: 3.5rem;
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      opacity: 0.15;
+      user-select: none;
+      pointer-events: none;
     }
 
     .food-name {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #d6336c;
-      margin-bottom: 0.5rem;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: #a44200;
+      margin-bottom: 0.8rem;
+      text-transform: capitalize;
+      letter-spacing: 0.02em;
+      user-select: text;
     }
 
     .food-category {
       display: inline-block;
-      background-color: #fbc2eb;
-      color: #721c24;
-      font-weight: 600;
-      padding: 0.3rem 0.8rem;
-      border-radius: 25px;
+      background-color: #f76c5e;
+      color: white;
+      font-weight: 700;
+      padding: 0.35rem 1rem;
+      border-radius: 30px;
       font-size: 0.85rem;
-      margin-bottom: 1rem;
-      align-self: flex-start;
+      letter-spacing: 0.03em;
+      margin-bottom: 1.2rem;
       user-select: none;
+      box-shadow: 0 3px 8px rgba(247,108,94,0.7);
     }
 
     .taste-desc {
-      font-size: 1rem;
-      color: #555;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #5a2d00;
       flex-grow: 1;
-      line-height: 1.4;
+      user-select: text;
     }
 
     .no-results {
-      grid-column: 1/-1;
+      grid-column: 1 / -1;
       text-align: center;
-      font-size: 1.3rem;
-      color: #999;
-      padding: 3rem 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #7f3300;
+      padding: 4rem 1rem;
       user-select: none;
     }
 
     @media (max-width: 600px) {
       header {
-        font-size: 1.5rem;
-        padding: 1.5rem 1rem;
+        font-size: 2rem;
+        padding: 2rem 1rem;
       }
 
-      .card {
-        padding: 1rem;
+      .food-name {
+        font-size: 1.4rem;
+      }
+
+      .taste-desc {
+        font-size: 1rem;
       }
     }
   </style>
@@ -131,15 +163,20 @@
 <body>
 
   <header>
-    🍲 Food & Their Tastes Dashboard
+    🍲 Delicious Food & Tastes Dashboard
   </header>
 
   <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="Search food or taste..." aria-label="Search food or taste" />
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search food, category or taste..."
+      aria-label="Search food, category or taste"
+    />
   </div>
 
-  <main id="foodGrid">
-    <!-- Food cards dynamically inserted here -->
+  <main id="foodGrid" role="list">
+    <!-- Food cards will appear here -->
   </main>
 
   <script>
@@ -159,30 +196,31 @@
       { name: "Miso Soup", category: "Soup", taste: "Umami, salty, soothing" }
     ];
 
-    const grid = document.getElementById('foodGrid');
+    const foodGrid = document.getElementById('foodGrid');
     const searchInput = document.getElementById('searchInput');
 
     function renderFoods(filter = '') {
-      grid.innerHTML = '';
-      const filteredFoods = foods.filter(food => {
-        const combined = (food.name + ' ' + food.category + ' ' + food.taste).toLowerCase();
-        return combined.includes(filter.toLowerCase());
+      foodGrid.innerHTML = '';
+      const filtered = foods.filter(food => {
+        const text = `${food.name} ${food.category} ${food.taste}`.toLowerCase();
+        return text.includes(filter.toLowerCase());
       });
 
-      if (filteredFoods.length === 0) {
-        grid.innerHTML = `<div class="no-results">😞 No matching food items found.</div>`;
+      if (filtered.length === 0) {
+        foodGrid.innerHTML = `<div class="no-results" role="alert">😞 No matching food items found.</div>`;
         return;
       }
 
-      filteredFoods.forEach(food => {
+      filtered.forEach(food => {
         const card = document.createElement('article');
         card.className = 'card';
+        card.setAttribute('role', 'listitem');
         card.innerHTML = `
           <span class="food-category">${food.category}</span>
           <h2 class="food-name">${food.name}</h2>
           <p class="taste-desc">${food.taste}</p>
         `;
-        grid.appendChild(card);
+        foodGrid.appendChild(card);
       });
     }
 
@@ -193,5 +231,6 @@
     // Initial render
     renderFoods();
   </script>
+
 </body>
 </html>
