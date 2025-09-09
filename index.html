@@ -147,3 +147,74 @@
       },
       {
         name: "Tite Kubo",
+        mangas: ["Bleach", "Burn the Witch"]
+      },
+      {
+        name: "Hajime Isayama",
+        mangas: ["Attack on Titan"]
+      },
+      {
+        name: "Rumiko Takahashi",
+        mangas: ["Inuyasha", "Ranma ½", "Urusei Yatsura"]
+      },
+      {
+        name: "Yoshihiro Togashi",
+        mangas: ["Yu Yu Hakusho", "Hunter x Hunter"]
+      }
+    ];
+
+    const grid = document.getElementById('artistGrid');
+    const searchInput = document.getElementById('searchInput');
+
+    function renderArtists(filter = "") {
+      grid.innerHTML = "";
+
+      const filtered = artists.filter(artist => {
+        const fullText = (artist.name + " " + artist.mangas.join(" ")).toLowerCase();
+        return fullText.includes(filter.toLowerCase());
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "<p>No artists found.</p>";
+        return;
+      }
+
+      filtered.forEach(artist => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const name = document.createElement("h2");
+        name.textContent = artist.name;
+
+        const list = document.createElement("ul");
+        list.className = "collection-list";
+        artist.mangas.forEach(manga => {
+          const li = document.createElement("li");
+          li.textContent = manga;
+          list.appendChild(li);
+        });
+
+        card.appendChild(name);
+        card.appendChild(list);
+
+        grid.appendChild(card);
+      });
+    }
+
+    // Initial render
+    renderArtists();
+
+    // Search functionality
+    searchInput.addEventListener("input", (e) => {
+      renderArtists(e.target.value);
+    });
+
+    // Theme toggle
+    const toggleBtn = document.querySelector('.toggle-theme');
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+    });
+  </script>
+
+</body>
+</html>
