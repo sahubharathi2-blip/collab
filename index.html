@@ -3,101 +3,108 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Manga Artist Collection</title>
+  <title>Manga Artist Gallery</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #ffffff;
+      background-color: #fdfdfd;
       color: #222;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
     }
 
     header {
-      background-color: #20232a;
+      background-color: #2c3e50;
       color: white;
-      padding: 1rem;
+      padding: 1rem 2rem;
       text-align: center;
     }
 
-    .main {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
+    .filter {
+      padding: 1rem 2rem;
+      text-align: center;
     }
 
-    .sidebar {
-      width: 250px;
-      background-color: #f4f4f4;
-      border-right: 1px solid #ddd;
-      overflow-y: auto;
+    .filter input {
+      padding: 0.6rem;
+      width: 300px;
+      max-width: 90%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
 
-    .sidebar h2 {
-      margin: 1rem;
-      font-size: 1.2rem;
-      color: #333;
-    }
-
-    .artist-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .artist-list li {
-      padding: 1rem;
-      border-bottom: 1px solid #ddd;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .artist-list li:hover {
-      background-color: #e0e0e0;
-    }
-
-    .artist-list li.active {
-      background-color: #ddd;
-      font-weight: bold;
-    }
-
-    .content {
-      flex: 1;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
       padding: 2rem;
-      overflow-y: auto;
     }
 
-    .artist-name {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s;
+      cursor: pointer;
     }
 
-    .manga-list {
-      list-style: none;
-      padding-left: 1rem;
+    .card:hover {
+      transform: scale(1.03);
     }
 
-    .manga-list li {
-      margin-bottom: 0.5rem;
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      background-color: #eee;
+    }
+
+    .card-body {
+      padding: 1rem;
+    }
+
+    .card-title {
       font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
     }
 
-    @media (max-width: 768px) {
-      .main {
-        flex-direction: column;
-      }
+    .card-text {
+      font-size: 0.95rem;
+      color: #555;
+    }
 
-      .sidebar {
-        width: 100%;
-        height: auto;
-        border-right: none;
-        border-bottom: 1px solid #ccc;
-      }
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+    }
 
-      .content {
-        padding: 1rem;
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px; right: 15px;
+      cursor: pointer;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      .card img {
+        height: 120px;
       }
     }
   </style>
@@ -105,18 +112,24 @@
 <body>
 
   <header>
-    <h1>Manga Artists & Their Collections</h1>
+    <h1>Manga Artist Gallery</h1>
   </header>
 
-  <div class="main">
-    <div class="sidebar">
-      <h2>Artists</h2>
-      <ul class="artist-list" id="artistList">
-        <!-- Artist list items will be injected here -->
-      </ul>
-    </div>
-    <div class="content" id="artistContent">
-      <p>Select an artist to view their manga collection.</p>
+  <div class="filter">
+    <input type="text" id="searchInput" placeholder="Search artist or manga...">
+  </div>
+
+  <div class="grid" id="artistGrid">
+    <!-- Cards will be generated here -->
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="artistModal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <div id="modalBody">
+        <!-- Modal content here -->
+      </div>
     </div>
   </div>
 
@@ -133,34 +146,66 @@
       { name: "Yoshihiro Togashi", mangas: ["Yu Yu Hakusho", "Hunter x Hunter"] }
     ];
 
-    const artistList = document.getElementById("artistList");
-    const artistContent = document.getElementById("artistContent");
+    const grid = document.getElementById("artistGrid");
+    const searchInput = document.getElementById("searchInput");
+    const modal = document.getElementById("artistModal");
+    const modalBody = document.getElementById("modalBody");
 
-    // Render sidebar list
-    artists.forEach((artist, index) => {
-      const li = document.createElement("li");
-      li.textContent = artist.name;
-      li.addEventListener("click", () => showArtist(index));
-      artistList.appendChild(li);
-    });
+    function renderArtists(filter = "") {
+      grid.innerHTML = "";
 
-    // Show artist details
-    function showArtist(index) {
-      const selected = artists[index];
+      const filtered = artists.filter(artist => {
+        const text = artist.name + " " + artist.mangas.join(" ");
+        return text.toLowerCase().includes(filter.toLowerCase());
+      });
 
-      // Remove active class from all
-      const lis = document.querySelectorAll('.artist-list li');
-      lis.forEach(li => li.classList.remove('active'));
-      lis[index].classList.add('active');
+      if (filtered.length === 0) {
+        grid.innerHTML = "<p>No artists found.</p>";
+        return;
+      }
 
-      artistContent.innerHTML = `
-        <div class="artist-name">${selected.name}</div>
-        <h3>Manga Collection:</h3>
-        <ul class="manga-list">
-          ${selected.mangas.map(m => `<li>${m}</li>`).join('')}
+      filtered.forEach((artist, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="https://via.placeholder.com/300x160?text=${encodeURIComponent(artist.name)}" alt="${artist.name}">
+          <div class="card-body">
+            <div class="card-title">${artist.name}</div>
+            <div class="card-text">${artist.mangas.slice(0, 2).join(", ")}${artist.mangas.length > 2 ? "..." : ""}</div>
+          </div>
+        `;
+        card.addEventListener("click", () => openModal(artist));
+        grid.appendChild(card);
+      });
+    }
+
+    function openModal(artist) {
+      modalBody.innerHTML = `
+        <h2>${artist.name}</h2>
+        <h4>Manga Collection:</h4>
+        <ul>
+          ${artist.mangas.map(m => `<li>${m}</li>`).join("")}
         </ul>
       `;
+      modal.style.display = "flex";
     }
+
+    function closeModal() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function(e) {
+      if (e.target == modal) {
+        closeModal();
+      }
+    }
+
+    searchInput.addEventListener("input", () => {
+      renderArtists(searchInput.value);
+    });
+
+    // Initial render
+    renderArtists();
   </script>
 
 </body>
