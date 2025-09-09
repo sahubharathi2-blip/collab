@@ -1,293 +1,168 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gourmet Restaurant Menu with Images</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2025 Car Trends Dashboard</title>
   <style>
-    /* Reset */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-    }
-
+    /* Global Styles */
     body {
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      background-color: #fafafa;
-      color: #333;
-      min-height: 100vh;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 2rem 1rem;
-    }
-
-    header {
-      max-width: 900px;
-      width: 100%;
-      text-align: center;
-      margin-bottom: 2rem;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 1rem;
-    }
-
-    header h1 {
-      font-weight: 900;
-      font-size: 2.8rem;
-      color: #2c2c2c;
-      letter-spacing: 2px;
-      font-family: 'Georgia', serif;
-    }
-
-    header p {
-      color: #777;
-      margin-top: 0.5rem;
-      font-style: italic;
-      font-size: 1.1rem;
-    }
-
-    .search-container {
-      max-width: 900px;
-      width: 100%;
-      margin-bottom: 2rem;
-      display: flex;
       justify-content: center;
-    }
-
-    .search-container input {
-      width: 100%;
-      max-width: 480px;
-      padding: 12px 18px;
-      font-size: 1.1rem;
-      border: 1.8px solid #bbb;
-      border-radius: 30px;
-      outline: none;
-      transition: border-color 0.3s ease;
-      font-family: inherit;
-    }
-
-    .search-container input:focus {
-      border-color: #b85c38;
-      box-shadow: 0 0 10px rgba(184,92,56,0.3);
-    }
-
-    main {
-      max-width: 900px;
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-
-    .menu-card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.07);
-      padding: 1.8rem 1.8rem 2rem;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: default;
-    }
-
-    .menu-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 14px 28px rgba(0,0,0,0.15);
-    }
-
-    .dish-image {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 5px 15px rgba(184,92,56,0.15);
-      user-select: none;
-    }
-
-    .category-label {
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #b85c38;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      margin-bottom: 0.8rem;
-      font-family: 'Courier New', Courier, monospace;
-      user-select: none;
-    }
-
-    .dish-name {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #2c2c2c;
-      margin-bottom: 0.4rem;
-      line-height: 1.2;
-    }
-
-    .dish-desc {
-      font-size: 1rem;
-      color: #555;
-      flex-grow: 1;
-      margin-bottom: 1rem;
-      line-height: 1.4;
-    }
-
-    .price {
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #b85c38;
-      align-self: flex-end;
-      user-select: none;
-    }
-
-    .no-results {
-      grid-column: 1/-1;
-      font-style: italic;
-      color: #999;
-      font-size: 1.3rem;
+      height: 100vh;
       text-align: center;
-      padding: 3rem 1rem;
-      user-select: none;
     }
 
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 2rem;
-      }
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
 
-      main {
-        grid-template-columns: 1fr;
-      }
+    .search-bar {
+      margin-bottom: 2rem;
+    }
+
+    .search-bar input {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+      width: 300px;
+    }
+
+    /* Car Cards Container */
+    .car-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      overflow-y: auto;
+      max-height: 70vh;
+      padding: 0 1rem;
+    }
+
+    /* Individual Car Card */
+    .car-card {
+      background: #333;
+      border-radius: 10px;
+      width: 300px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .car-card:hover {
+      transform: scale(1.05);
+    }
+
+    .car-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .car-card .details {
+      padding: 1rem;
+    }
+
+    .car-card .details h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .car-card .details p {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .car-card .details .price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #fdbb2d;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Gourmet Restaurant Menu</h1>
-    <p>Discover our delicious food collections and exquisite tastes</p>
-  </header>
 
-  <div class="search-container">
-    <input
-      type="search"
-      id="searchInput"
-      placeholder="Search dishes or tastes..."
-      aria-label="Search dishes or tastes"
-    />
+  <h1>2025 Car Trends Dashboard</h1>
+
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Search for a car..." oninput="filterCars()">
   </div>
 
-  <main id="menuGrid" role="list">
-    <!-- Menu cards go here -->
-  </main>
+  <div class="car-cards" id="carCards">
+    <!-- Car cards will be inserted here by JavaScript -->
+  </div>
 
   <script>
-    const menuItems = [
+    const cars = [
       {
-        name: "Truffle Mushroom Risotto",
-        category: "Main Course",
-        description: "Creamy Arborio rice cooked with wild mushrooms and truffle oil.",
-        price: "$24",
+        name: "Tesla Model Y",
+        description: "A sleek electric SUV with impressive range and performance.",
+        price: "$55,000",
         image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80"
       },
       {
-        name: "Grilled Atlantic Salmon",
-        category: "Main Course",
-        description: "Fresh salmon fillet grilled to perfection with lemon butter sauce.",
-        price: "$29",
+        name: "Hyundai Creta 2025",
+        description: "A compact SUV offering advanced technology and comfort.",
+        price: "$25,000",
         image: "https://images.unsplash.com/photo-1562967916-eb82221dfb34?auto=format&fit=crop&w=800&q=80"
       },
       {
-        name: "Classic Caesar Salad",
-        category: "Appetizer",
-        description: "Romaine lettuce tossed with Caesar dressing, parmesan, and croutons.",
-        price: "$12",
-        image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        name: "Bruschetta al Pomodoro",
-        category: "Appetizer",
-        description: "Grilled bread topped with marinated tomatoes, garlic, and basil.",
-        price: "$10",
-        image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        name: "Chocolate Lava Cake",
-        category: "Dessert",
-        description: "Warm chocolate cake with a molten chocolate center, served with vanilla ice cream.",
-        price: "$14",
-        image: "https://images.unsplash.com/photo-1611213197036-cce5d15dba4f?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        name: "Crème Brûlée",
-        category: "Dessert",
-        description: "Rich custard topped with a caramelized sugar crust.",
-        price: "$13",
-        image: "https://images.unsplash.com/photo-1505253210343-9508f8ae515d?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        name: "Espresso",
-        category: "Beverage",
-        description: "Strong and bold espresso shot made from freshly ground coffee beans.",
-        price: "$5",
-        image: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        name: "Herbal Iced Tea",
-        category: "Beverage",
-        description: "Refreshing iced tea infused with herbs and lemon.",
-        price: "$6",
-        image: "https://images.unsplash.com/photo-1510626176961-4b7b0a0f0d10?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        name: "Lobster Bisque",
-        category: "Soup",
-        description: "Smooth and creamy lobster bisque with a hint of brandy.",
-        price: "$18",
-        image: "https://images.unsplash.com/photo-1514516870923-cf0de1c30a88?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        name: "French Onion Soup",
-        category: "Soup",
-        description: "Traditional onion soup topped with melted Gruyère cheese.",
-        price: "$15",
+        name: "BMW M5 Hybrid",
+        description: "A high-performance hybrid sedan combining luxury and speed.",
+        price: "$120,000",
         image: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Honda 0 Saloon",
+        description: "A futuristic electric saloon with minimalist design.",
+        price: "$45,000",
+        image: "https://images.unsplash.com/photo-1562967916-eb82221dfb34?auto=format&fit=crop&w=800&q=80"
+      },
+      {
+        name: "Renault Clio 6",
+        description: "A compact hatchback with sleek design and advanced features.",
+        price: "$22,000",
+        image: "https://images.unsplash.com/photo-1562967916-eb82221dfb34?auto=format&fit=crop&w=800&q=80"
       }
     ];
 
-    const menuGrid = document.getElementById('menuGrid');
-    const searchInput = document.getElementById('searchInput');
+    const carCardsContainer = document.getElementById('carCards');
 
-    function renderMenu(filter = '') {
-      menuGrid.innerHTML = '';
-      const filtered = menuItems.filter(item => {
-        const text = `${item.name} ${item.category} ${item.description}`.toLowerCase();
-        return text.includes(filter.toLowerCase());
-      });
-
-      if (filtered.length === 0) {
-        menuGrid.innerHTML = `<div class="no-results" role="alert">No dishes match your search.</div>`;
-        return;
-      }
-
-      filtered.forEach(item => {
-        const card = document.createElement('article');
-        card.className = 'menu-card';
-        card.setAttribute('role', 'listitem');
-        card.innerHTML = `
-          <img src="${item.image}" alt="${item.name}" class="dish-image" loading="lazy" />
-          <div class="category-label">${item.category}</div>
-          <h2 class="dish-name">${item.name}</h2>
-          <p class="dish-desc">${item.description}</p>
-          <div class="price">${item.price}</div>
+    function displayCars(carsToDisplay) {
+      carCardsContainer.innerHTML = '';
+      carsToDisplay.forEach(car => {
+        const carCard = document.createElement('div');
+        carCard.classList.add('car-card');
+        carCard.innerHTML = `
+          <img src="${car.image}" alt="${car.name}">
+          <div class="details">
+            <h2>${car.name}</h2>
+            <p>${car.description}</p>
+            <p class="price">${car.price}</p>
+          </div>
         `;
-        menuGrid.appendChild(card);
+        carCardsContainer.appendChild(carCard);
       });
     }
 
-    searchInput.addEventListener('input', e => {
-      renderMenu(e.target.value);
-    });
+    function filterCars() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filteredCars = cars.filter(car => car.name.toLowerCase().includes(searchTerm));
+      displayCars(filteredCars);
+    }
 
-    renderMenu();
+    // Initially display all cars
+    displayCars(cars);
   </script>
+
 </body>
 </html>
