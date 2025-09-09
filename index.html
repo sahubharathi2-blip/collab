@@ -1,176 +1,159 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🔥 2025 Trending Cars Dashboard</title>
-  <style>
-    /* Reset */
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Professional Trending Cars Dashboard</title>
+<style>
+  /* Reset */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0e1e2b;
+    color: #f0f0f0;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  h1 {
+    font-weight: 900;
+    font-size: 3.2rem;
+    margin-bottom: 1rem;
+    color: #fdbb2d;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #fdbb2d88;
+  }
+  .search-container {
+    width: 360px;
+    max-width: 90vw;
+    margin-bottom: 2.5rem;
+  }
+  .search-container input {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.2rem;
+    border-radius: 40px;
+    border: none;
+    outline: none;
+    background-color: #203448;
+    color: #f0f0f0;
+    box-shadow: 0 0 12px #fdbb2d55;
+    font-weight: 600;
+    transition: box-shadow 0.3s ease;
+  }
+  .search-container input::placeholder {
+    color: #c2b98b;
+    font-style: italic;
+  }
+  .search-container input:focus {
+    box-shadow: 0 0 20px #fdbb2dcc;
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #f0f0f0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem;
-      overflow-x: hidden;
-    }
+  /* Grid layout for cards */
+  .car-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2.5rem;
+    width: 100%;
+    max-width: 1280px;
+  }
+  /* Card styling */
+  .car-card {
+    background: linear-gradient(145deg, #1f2d42, #152433);
+    border-radius: 18px;
+    box-shadow:
+      0 6px 15px rgba(0, 0, 0, 0.6),
+      0 0 8px #fdbb2d88;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .car-card:hover {
+    transform: translateY(-12px) scale(1.03);
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.7),
+      0 0 16px #fdbb2dcc;
+  }
 
+  /* Image */
+  .car-card img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover;
+    border-bottom: 5px solid #fdbb2d;
+    transition: transform 0.4s ease;
+  }
+  .car-card:hover img {
+    transform: scale(1.1);
+  }
+
+  /* Card content */
+  .car-info {
+    padding: 1.6rem 2rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .car-info h2 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin: 0 0 0.6rem 0;
+    color: #fdbb2d;
+    letter-spacing: 1.2px;
+    text-shadow: 0 0 6px #fdbb2daa;
+  }
+  .car-info p {
+    flex-grow: 1;
+    font-size: 1.1rem;
+    color: #ddd;
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+  }
+  .car-info .price {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
+    text-align: right;
+    letter-spacing: 1.1px;
+    border-top: 1px solid #444;
+    padding-top: 0.5rem;
+    text-shadow: 0 0 5px rgba(0,0,0,0.9);
+  }
+
+  /* Responsive tweaks */
+  @media (max-width: 420px) {
     h1 {
-      font-weight: 900;
-      font-size: 3.6rem;
-      margin-bottom: 0.5rem;
-      letter-spacing: 3px;
-      text-shadow: 0 0 12px rgba(253, 187, 45, 0.85);
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
     }
-
-    .search-bar {
-      margin-bottom: 2rem;
-      width: 360px;
-      max-width: 90vw;
+    .car-grid {
+      grid-template-columns: 1fr;
     }
-
-    .search-bar input {
-      width: 100%;
-      padding: 0.75rem 1.5rem;
-      font-size: 1.2rem;
-      border-radius: 50px;
-      border: none;
-      outline: none;
-      box-shadow: 0 0 12px rgba(253, 187, 45, 0.5);
-      background: #1a2b3c;
-      color: #eee;
-      transition: box-shadow 0.4s ease;
-      font-weight: 600;
-      letter-spacing: 1px;
+    .car-card img {
+      height: 200px;
     }
-
-    .search-bar input::placeholder {
-      color: #c2b98b;
-      font-style: italic;
-    }
-
-    .search-bar input:focus {
-      box-shadow: 0 0 24px rgba(253, 187, 45, 0.85);
-    }
-
-    /* Grid container */
-    .car-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-      gap: 2.5rem;
-      width: 100%;
-      max-width: 1280px;
-      padding: 0 1rem;
-    }
-
-    /* Card styles */
-    .car-card {
-      background: linear-gradient(145deg, #1c2533, #121a24);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow:
-        0 10px 15px rgba(0,0,0,0.6),
-        0 0 10px rgba(253,187,45,0.6);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .car-card:hover {
-      transform: translateY(-15px) scale(1.03);
-      box-shadow:
-        0 20px 30px rgba(0,0,0,0.7),
-        0 0 20px rgba(253,187,45,0.9);
-    }
-
-    .car-image {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-bottom: 5px solid #fdbb2d;
-      transition: transform 0.4s ease;
-    }
-
-    .car-card:hover .car-image {
-      transform: scale(1.1);
-    }
-
-    .car-details {
-      padding: 1.5rem 2rem;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .car-name {
-      font-size: 2rem;
-      font-weight: 900;
-      color: #fdbb2d;
-      margin: 0 0 0.6rem 0;
-      letter-spacing: 1.5px;
-      text-shadow: 0 0 8px rgba(253,187,45,0.9);
-    }
-
-    .car-desc {
-      font-size: 1.1rem;
-      color: #d3d3d3;
-      line-height: 1.5;
-      flex-grow: 1;
-      margin-bottom: 1.3rem;
-    }
-
-    .car-price {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #fff;
-      text-align: right;
-      letter-spacing: 1px;
-      padding-top: 0.5rem;
-      border-top: 1px solid #444;
-      text-shadow: 0 0 4px rgba(0,0,0,0.8);
-    }
-
-    /* Responsive */
-    @media (max-width: 440px) {
-      h1 {
-        font-size: 2.4rem;
-      }
-      .car-cards {
-        grid-template-columns: 1fr;
-      }
-      .car-card {
-        max-width: 100%;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
 
   <h1>🔥 Trending Cars 2025</h1>
 
-  <div class="search-bar">
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search cars by name..."
-      oninput="filterCars()"
-      aria-label="Search cars"
-    />
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search cars by name..." aria-label="Search cars" oninput="filterCars()" />
   </div>
 
-  <section class="car-cards" id="carCards">
-    <!-- Cards generated dynamically -->
-  </section>
+  <main class="car-grid" id="carGrid">
+    <!-- Car cards generated here -->
+  </main>
 
   <script>
     const cars = [
@@ -212,36 +195,42 @@
       }
     ];
 
-    const carCardsContainer = document.getElementById('carCards');
+    const carGrid = document.getElementById('carGrid');
 
-    function displayCars(list) {
-      carCardsContainer.innerHTML = '';
-      if (list.length === 0) {
-        carCardsContainer.innerHTML = `<p style="color:#fdbb2d; font-size:1.3rem; grid-column: 1/-1; text-align:center;">No cars found.</p>`;
+    function createCarCard(car) {
+      const card = document.createElement('article');
+      card.classList.add('car-card');
+      card.innerHTML = `
+        <img src="${car.image}" alt="Photo of ${car.name}" loading="lazy" />
+        <div class="car-info">
+          <h2>${car.name}</h2>
+          <p>${car.description}</p>
+          <div class="price">${car.price}</div>
+        </div>
+      `;
+      return card;
+    }
+
+    function displayCars(carList) {
+      carGrid.innerHTML = '';
+      if (carList.length === 0) {
+        carGrid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #fdbb2d; font-size: 1.3rem;">No cars found matching your search.</p>`;
         return;
       }
-      list.forEach(car => {
-        const card = document.createElement('article');
-        card.className = 'car-card';
-        card.innerHTML = `
-          <img class="car-image" src="${car.image}" alt="Image of ${car.name}" loading="lazy" />
-          <div class="car-details">
-            <h2 class="car-name">${car.name}</h2>
-            <p class="car-desc">${car.description}</p>
-            <div class="car-price">${car.price}</div>
-          </div>
-        `;
-        carCardsContainer.appendChild(card);
+      carList.forEach(car => {
+        carGrid.appendChild(createCarCard(car));
       });
     }
 
     function filterCars() {
-      const term = document.getElementById('searchInput').value.trim().toLowerCase();
-      const filtered = cars.filter(car => car.name.toLowerCase().includes(term));
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = cars.filter(car => car.name.toLowerCase().includes(query));
       displayCars(filtered);
     }
 
+    // Initial display
     displayCars(cars);
   </script>
+
 </body>
 </html>
