@@ -1,209 +1,247 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>2025 Trending Cars Dashboard</title>
-<style>
-  /* Reset & base */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #141e30, #243b55);
-    color: #eee;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-  }
-
-  h1 {
-    margin-bottom: 1rem;
-    font-weight: 700;
-    font-size: 3rem;
-    letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba(255 255 255 / 0.3);
-  }
-
-  .search-bar {
-    margin-bottom: 2rem;
-    width: 320px;
-  }
-
-  .search-bar input {
-    width: 100%;
-    padding: 0.6rem 1rem;
-    font-size: 1.1rem;
-    border-radius: 30px;
-    border: none;
-    outline: none;
-    box-shadow: 0 0 10px rgba(255 255 255 / 0.2);
-    background-color: #1a2738;
-    color: #eee;
-    transition: box-shadow 0.3s ease;
-  }
-
-  .search-bar input::placeholder {
-    color: #bbb;
-  }
-
-  .search-bar input:focus {
-    box-shadow: 0 0 12px #fdbb2d;
-  }
-
-  /* Grid for car cards */
-  .car-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    max-width: 1200px;
-  }
-
-  /* Individual car card */
-  .car-card {
-    background: #1f2a40;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  .car-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(253,187,45,0.7);
-  }
-
-  .car-card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-    display: block;
-    border-bottom: 3px solid #fdbb2d;
-    transition: transform 0.4s ease;
-  }
-  .car-card:hover img {
-    transform: scale(1.05);
-  }
-
-  .car-details {
-    padding: 1rem 1.2rem 1.5rem;
-  }
-
-  .car-details h2 {
-    margin: 0 0 0.5rem;
-    font-weight: 700;
-    font-size: 1.6rem;
-    color: #fdbb2d;
-  }
-
-  .car-details p {
-    margin: 0 0 1rem;
-    font-size: 1rem;
-    line-height: 1.4;
-    color: #ccc;
-  }
-
-  .car-details .price {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #fff;
-  }
-
-  @media (max-width: 400px) {
-    h1 {
-      font-size: 2rem;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🔥 2025 Trending Cars Dashboard</title>
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
     }
-  }
-</style>
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-weight: 900;
+      font-size: 3.6rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 3px;
+      text-shadow: 0 0 12px rgba(253, 187, 45, 0.85);
+    }
+
+    .search-bar {
+      margin-bottom: 2rem;
+      width: 360px;
+      max-width: 90vw;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1.5rem;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      border: none;
+      outline: none;
+      box-shadow: 0 0 12px rgba(253, 187, 45, 0.5);
+      background: #1a2b3c;
+      color: #eee;
+      transition: box-shadow 0.4s ease;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .search-bar input::placeholder {
+      color: #c2b98b;
+      font-style: italic;
+    }
+
+    .search-bar input:focus {
+      box-shadow: 0 0 24px rgba(253, 187, 45, 0.85);
+    }
+
+    /* Grid container */
+    .car-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2.5rem;
+      width: 100%;
+      max-width: 1280px;
+      padding: 0 1rem;
+    }
+
+    /* Card styles */
+    .car-card {
+      background: linear-gradient(145deg, #1c2533, #121a24);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow:
+        0 10px 15px rgba(0,0,0,0.6),
+        0 0 10px rgba(253,187,45,0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .car-card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow:
+        0 20px 30px rgba(0,0,0,0.7),
+        0 0 20px rgba(253,187,45,0.9);
+    }
+
+    .car-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-bottom: 5px solid #fdbb2d;
+      transition: transform 0.4s ease;
+    }
+
+    .car-card:hover .car-image {
+      transform: scale(1.1);
+    }
+
+    .car-details {
+      padding: 1.5rem 2rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .car-name {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fdbb2d;
+      margin: 0 0 0.6rem 0;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 8px rgba(253,187,45,0.9);
+    }
+
+    .car-desc {
+      font-size: 1.1rem;
+      color: #d3d3d3;
+      line-height: 1.5;
+      flex-grow: 1;
+      margin-bottom: 1.3rem;
+    }
+
+    .car-price {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      text-align: right;
+      letter-spacing: 1px;
+      padding-top: 0.5rem;
+      border-top: 1px solid #444;
+      text-shadow: 0 0 4px rgba(0,0,0,0.8);
+    }
+
+    /* Responsive */
+    @media (max-width: 440px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+      .car-cards {
+        grid-template-columns: 1fr;
+      }
+      .car-card {
+        max-width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<h1>Trending Cars of 2025</h1>
+  <h1>🔥 Trending Cars 2025</h1>
 
-<div class="search-bar">
-  <input type="text" id="searchInput" placeholder="Search cars by name..." oninput="filterCars()" />
-</div>
+  <div class="search-bar">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search cars by name..."
+      oninput="filterCars()"
+      aria-label="Search cars"
+    />
+  </div>
 
-<div class="car-cards" id="carCards">
-  <!-- Cards injected by JS -->
-</div>
+  <section class="car-cards" id="carCards">
+    <!-- Cards generated dynamically -->
+  </section>
 
-<script>
-  const cars = [
-    {
-      name: "Tesla Model S Plaid",
-      description: "Ultra high-performance electric sedan with 396 miles range and 0-60 mph in under 2 seconds.",
-      price: "$130,000",
-      image: "https://cdn.motor1.com/images/mgl/0ANWm/s3/tesla-model-s-plaid.webp"
-    },
-    {
-      name: "Ford Mustang Mach-E",
-      description: "All-electric SUV blending Mustang heritage with futuristic electric power and smart tech.",
-      price: "$60,000",
-      image: "https://cdn.motor1.com/images/mgl/8rLwZ/s3/ford-mustang-mach-e.webp"
-    },
-    {
-      name: "Porsche Taycan",
-      description: "Luxury electric sports car combining Porsche's driving dynamics with zero emissions.",
-      price: "$110,000",
-      image: "https://cdn.motor1.com/images/mgl/kQ9Y2/s3/2020-porsche-taycan-turbo.jpg"
-    },
-    {
-      name: "BMW iX",
-      description: "BMW's flagship electric SUV with futuristic design, premium tech, and over 300 miles range.",
-      price: "$85,000",
-      image: "https://cdn.motor1.com/images/mgl/6O2xk/s3/bmw-ix-2022.webp"
-    },
-    {
-      name: "Audi e-tron GT",
-      description: "Audi's high-performance electric sedan combining luxury, style, and 238 miles range.",
-      price: "$105,000",
-      image: "https://cdn.motor1.com/images/mgl/JmN64/s3/audi-e-tron-gt.webp"
-    },
-    {
-      name: "Lucid Air",
-      description: "Breakthrough electric luxury sedan with incredible range up to 520 miles and advanced tech.",
-      price: "$160,000",
-      image: "https://cdn.motor1.com/images/mgl/VNYow/s3/lucid-air.webp"
+  <script>
+    const cars = [
+      {
+        name: "Tesla Model S Plaid",
+        description: "Ultra high-performance electric sedan with 396 miles range and 0-60 mph in under 2 seconds.",
+        price: "$130,000",
+        image: "https://cdn.motor1.com/images/mgl/0ANWm/s3/tesla-model-s-plaid.webp"
+      },
+      {
+        name: "Ford Mustang Mach-E",
+        description: "All-electric SUV blending Mustang heritage with futuristic electric power and smart tech.",
+        price: "$60,000",
+        image: "https://cdn.motor1.com/images/mgl/8rLwZ/s3/ford-mustang-mach-e.webp"
+      },
+      {
+        name: "Porsche Taycan",
+        description: "Luxury electric sports car combining Porsche's driving dynamics with zero emissions.",
+        price: "$110,000",
+        image: "https://cdn.motor1.com/images/mgl/kQ9Y2/s3/2020-porsche-taycan-turbo.jpg"
+      },
+      {
+        name: "BMW iX",
+        description: "BMW's flagship electric SUV with futuristic design, premium tech, and over 300 miles range.",
+        price: "$85,000",
+        image: "https://cdn.motor1.com/images/mgl/6O2xk/s3/bmw-ix-2022.webp"
+      },
+      {
+        name: "Audi e-tron GT",
+        description: "Audi's high-performance electric sedan combining luxury, style, and 238 miles range.",
+        price: "$105,000",
+        image: "https://cdn.motor1.com/images/mgl/JmN64/s3/audi-e-tron-gt.webp"
+      },
+      {
+        name: "Lucid Air",
+        description: "Breakthrough electric luxury sedan with incredible range up to 520 miles and advanced tech.",
+        price: "$160,000",
+        image: "https://cdn.motor1.com/images/mgl/VNYow/s3/lucid-air.webp"
+      }
+    ];
+
+    const carCardsContainer = document.getElementById('carCards');
+
+    function displayCars(list) {
+      carCardsContainer.innerHTML = '';
+      if (list.length === 0) {
+        carCardsContainer.innerHTML = `<p style="color:#fdbb2d; font-size:1.3rem; grid-column: 1/-1; text-align:center;">No cars found.</p>`;
+        return;
+      }
+      list.forEach(car => {
+        const card = document.createElement('article');
+        card.className = 'car-card';
+        card.innerHTML = `
+          <img class="car-image" src="${car.image}" alt="Image of ${car.name}" loading="lazy" />
+          <div class="car-details">
+            <h2 class="car-name">${car.name}</h2>
+            <p class="car-desc">${car.description}</p>
+            <div class="car-price">${car.price}</div>
+          </div>
+        `;
+        carCardsContainer.appendChild(card);
+      });
     }
-  ];
 
-  const carCardsContainer = document.getElementById('carCards');
-
-  function displayCars(carsToDisplay) {
-    carCardsContainer.innerHTML = '';
-    if(carsToDisplay.length === 0){
-      carCardsContainer.innerHTML = `<p style="color:#fdbb2d; font-size:1.2rem;">No cars match your search.</p>`;
-      return;
+    function filterCars() {
+      const term = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filtered = cars.filter(car => car.name.toLowerCase().includes(term));
+      displayCars(filtered);
     }
-    carsToDisplay.forEach(car => {
-      const card = document.createElement('div');
-      card.className = 'car-card';
-      card.innerHTML = `
-        <img src="${car.image}" alt="${car.name}" loading="lazy" />
-        <div class="car-details">
-          <h2>${car.name}</h2>
-          <p>${car.description}</p>
-          <div class="price">${car.price}</div>
-        </div>
-      `;
-      carCardsContainer.appendChild(card);
-    });
-  }
 
-  function filterCars() {
-    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-    const filtered = cars.filter(car => car.name.toLowerCase().includes(searchTerm));
-    displayCars(filtered);
-  }
-
-  // Initial display
-  displayCars(cars);
-</script>
-
+    displayCars(cars);
+  </script>
 </body>
 </html>
