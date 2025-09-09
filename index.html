@@ -1,110 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Manga Artist Gallery</title>
+  <meta charset="UTF-8">
+  <title>Colorful Manga Artist Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      font-family: Arial, sans-serif;
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background-color: #fdfdfd;
-      color: #222;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdfbfb;
+      background: linear-gradient(to right, #ebedee, #ffffff);
+      color: #333;
     }
 
     header {
-      background-color: #2c3e50;
+      background: linear-gradient(90deg, #ff6f91, #ff9671, #ffc75f);
       color: white;
-      padding: 1rem 2rem;
+      padding: 2rem;
       text-align: center;
+      font-size: 2rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-    .filter {
-      padding: 1rem 2rem;
+    .search-bar {
       text-align: center;
+      margin: 2rem 0;
     }
 
-    .filter input {
-      padding: 0.6rem;
+    .search-bar input {
+      padding: 0.8rem 1.2rem;
       width: 300px;
       max-width: 90%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      font-size: 1rem;
+      border: 2px solid #ffc75f;
+      border-radius: 50px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      border-color: #ff6f91;
+      box-shadow: 0 0 8px rgba(255,111,145,0.5);
     }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
+      gap: 2rem;
       padding: 2rem;
     }
 
     .card {
       background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: transform 0.2s;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
     }
 
     .card:hover {
-      transform: scale(1.03);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
 
-    .card img {
-      width: 100%;
-      height: 160px;
-      object-fit: cover;
-      background-color: #eee;
-    }
-
-    .card-body {
-      padding: 1rem;
-    }
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: bold;
+    .card h3 {
+      color: #ff6f91;
       margin-bottom: 0.5rem;
     }
 
-    .card-text {
-      font-size: 0.95rem;
-      color: #555;
+    .card ul {
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+      list-style-type: disc;
     }
 
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0; top: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.6);
-      align-items: center;
-      justify-content: center;
+    .tag {
+      display: inline-block;
+      background-color: #ff9671;
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      margin-right: 0.4rem;
+      margin-top: 0.5rem;
     }
 
-    .modal-content {
-      background-color: white;
-      padding: 2rem;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 500px;
-      position: relative;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 10px; right: 15px;
-      cursor: pointer;
+    .no-results {
+      text-align: center;
       font-size: 1.2rem;
+      color: #999;
     }
 
     @media (max-width: 600px) {
-      .card img {
-        height: 120px;
+      header {
+        font-size: 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .card {
+        padding: 1rem;
       }
     }
   </style>
@@ -112,92 +117,63 @@
 <body>
 
   <header>
-    <h1>Manga Artist Gallery</h1>
+    🎨 Manga Artists & Their Colorful Collections
   </header>
 
-  <div class="filter">
+  <div class="search-bar">
     <input type="text" id="searchInput" placeholder="Search artist or manga...">
   </div>
 
   <div class="grid" id="artistGrid">
-    <!-- Cards will be generated here -->
-  </div>
-
-  <!-- Modal -->
-  <div class="modal" id="artistModal">
-    <div class="modal-content">
-      <span class="modal-close" onclick="closeModal()">&times;</span>
-      <div id="modalBody">
-        <!-- Modal content here -->
-      </div>
-    </div>
+    <!-- Dynamic content -->
   </div>
 
   <script>
     const artists = [
-      { name: "Eiichiro Oda", mangas: ["One Piece"] },
-      { name: "Masashi Kishimoto", mangas: ["Naruto", "Samurai 8"] },
-      { name: "Akira Toriyama", mangas: ["Dragon Ball", "Dr. Slump"] },
-      { name: "Naoko Takeuchi", mangas: ["Sailor Moon"] },
-      { name: "Kentaro Miura", mangas: ["Berserk"] },
-      { name: "Tite Kubo", mangas: ["Bleach", "Burn the Witch"] },
-      { name: "Hajime Isayama", mangas: ["Attack on Titan"] },
-      { name: "Rumiko Takahashi", mangas: ["Inuyasha", "Ranma ½", "Urusei Yatsura"] },
-      { name: "Yoshihiro Togashi", mangas: ["Yu Yu Hakusho", "Hunter x Hunter"] }
+      { name: "Eiichiro Oda", mangas: ["One Piece"], tags: ["Shonen"] },
+      { name: "Masashi Kishimoto", mangas: ["Naruto", "Samurai 8"], tags: ["Shonen"] },
+      { name: "Akira Toriyama", mangas: ["Dragon Ball", "Dr. Slump"], tags: ["Shonen", "Comedy"] },
+      { name: "Naoko Takeuchi", mangas: ["Sailor Moon"], tags: ["Shojo", "Magical Girl"] },
+      { name: "Kentaro Miura", mangas: ["Berserk"], tags: ["Seinen", "Dark Fantasy"] },
+      { name: "Tite Kubo", mangas: ["Bleach", "Burn the Witch"], tags: ["Shonen", "Action"] },
+      { name: "Hajime Isayama", mangas: ["Attack on Titan"], tags: ["Seinen", "Post-apocalyptic"] },
+      { name: "Rumiko Takahashi", mangas: ["Inuyasha", "Ranma ½", "Urusei Yatsura"], tags: ["Rom-Com", "Fantasy"] },
+      { name: "Yoshihiro Togashi", mangas: ["Yu Yu Hakusho", "Hunter x Hunter"], tags: ["Shonen", "Adventure"] }
     ];
 
     const grid = document.getElementById("artistGrid");
     const searchInput = document.getElementById("searchInput");
-    const modal = document.getElementById("artistModal");
-    const modalBody = document.getElementById("modalBody");
 
     function renderArtists(filter = "") {
       grid.innerHTML = "";
 
       const filtered = artists.filter(artist => {
-        const text = artist.name + " " + artist.mangas.join(" ");
+        const text = artist.name + " " + artist.mangas.join(" ") + " " + artist.tags.join(" ");
         return text.toLowerCase().includes(filter.toLowerCase());
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = "<p>No artists found.</p>";
+        grid.innerHTML = `<div class="no-results">😢 No matching artists or manga found.</div>`;
         return;
       }
 
-      filtered.forEach((artist, index) => {
+      filtered.forEach(artist => {
         const card = document.createElement("div");
         card.className = "card";
+
         card.innerHTML = `
-          <img src="https://via.placeholder.com/300x160?text=${encodeURIComponent(artist.name)}" alt="${artist.name}">
-          <div class="card-body">
-            <div class="card-title">${artist.name}</div>
-            <div class="card-text">${artist.mangas.slice(0, 2).join(", ")}${artist.mangas.length > 2 ? "..." : ""}</div>
+          <h3>${artist.name}</h3>
+          <strong>Mangas:</strong>
+          <ul>
+            ${artist.mangas.map(manga => `<li>${manga}</li>`).join("")}
+          </ul>
+          <div>
+            ${artist.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
           </div>
         `;
-        card.addEventListener("click", () => openModal(artist));
+
         grid.appendChild(card);
       });
-    }
-
-    function openModal(artist) {
-      modalBody.innerHTML = `
-        <h2>${artist.name}</h2>
-        <h4>Manga Collection:</h4>
-        <ul>
-          ${artist.mangas.map(m => `<li>${m}</li>`).join("")}
-        </ul>
-      `;
-      modal.style.display = "flex";
-    }
-
-    function closeModal() {
-      modal.style.display = "none";
-    }
-
-    window.onclick = function(e) {
-      if (e.target == modal) {
-        closeModal();
-      }
     }
 
     searchInput.addEventListener("input", () => {
