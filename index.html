@@ -1,248 +1,231 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Bharathi | Graphic Design Portfolio</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TrendDrive - Trending Cars 2025</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: "Segoe UI", sans-serif;
-}
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-body{
-    display:flex;
-    background:#f2f2f2;
-}
+  /* Reset */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background: #f5f7fa;
+    color: #222;
+    min-height: 100vh;
+  }
 
-/* ===== Sidebar ===== */
-.sidebar{
-    width:270px;
-    background:#0f0f0f;
-    color:#fff;
-    padding:25px;
-    position:fixed;
-    height:100vh;
-}
+  /* Header/Nav */
+  header {
+    position: sticky;
+    top: 0;
+    background: #0d253f;
+    color: #f7f9fb;
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 10px rgb(0 0 0 / 0.2);
+    z-index: 10;
+  }
+  header h1 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    color: #f0a500;
+    user-select: none;
+  }
 
-.sidebar h1{
-    font-size:26px;
-    letter-spacing:1px;
-}
+  /* Search input in header */
+  header input[type="search"] {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    width: 280px;
+    max-width: 90vw;
+    transition: box-shadow 0.3s ease;
+  }
+  header input[type="search"]:focus {
+    box-shadow: 0 0 8px #f0a500aa;
+  }
 
-.sidebar span{
-    color:gold;
-}
+  main {
+    max-width: 1200px;
+    margin: 2rem auto 4rem;
+    padding: 0 1rem;
+  }
 
-.sidebar p{
-    font-size:14px;
-    margin-top:8px;
-    color:#ccc;
-}
+  /* Grid layout */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+  }
 
-.sidebar h3{
-    margin-top:25px;
-    margin-bottom:10px;
-    font-size:16px;
-    color:gold;
-}
+  /* Card */
+  .card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 12px 25px rgb(0 0 0 / 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 40px rgb(240 165 0 / 0.3);
+  }
 
-.sidebar ul{
-    list-style:none;
-}
+  .card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .card:hover img {
+    transform: scale(1.07);
+  }
 
-.sidebar ul li{
-    font-size:14px;
-    margin-bottom:6px;
-}
+  .card-content {
+    padding: 1.5rem 1.7rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-content h2 {
+    margin: 0 0 0.8rem;
+    font-size: 1.6rem;
+    color: #0d253f;
+  }
+  .card-content p {
+    margin: 0 0 1.4rem;
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.4;
+  }
+  .price {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #f0a500;
+    align-self: flex-end;
+  }
 
-.colors{
-    margin-top:10px;
-}
-
-.colors div{
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    display:inline-block;
-    margin-right:8px;
-}
-
-.black{background:black;}
-.gold{background:gold;}
-.white{background:white;border:1px solid #ccc;}
-.red{background:red;}
-
-.color-info{
-    font-size:13px;
-    margin-top:10px;
-    line-height:1.6;
-    color:#ddd;
-}
-
-/* ===== Main Content ===== */
-.main{
-    margin-left:270px;
-    padding:30px;
-    width:100%;
-}
-
-header h2{
-    font-size:32px;
-}
-
-header p{
-    color:#666;
-    margin-top:5px;
-    margin-bottom:30px;
-}
-
-/* ===== Portfolio Grid ===== */
-.portfolio{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-    gap:20px;
-}
-
-.card{
-    background:#fff;
-    padding:15px;
-    border-radius:10px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:translateY(-6px);
-}
-
-.card img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-    border-radius:8px;
-    margin-bottom:10px;
-}
-
-.card h4{
-    font-size:18px;
-    margin-bottom:5px;
-}
-
-.card p{
-    font-size:14px;
-    color:#555;
-}
-
-/* ===== Footer ===== */
-footer{
-    text-align:center;
-    margin-top:40px;
-    color:#777;
-    font-size:14px;
-}
+  /* Responsive */
+  @media (max-width: 480px) {
+    header {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    header input[type="search"] {
+      width: 100%;
+      max-width: none;
+    }
+    .card img {
+      height: 180px;
+    }
+  }
 </style>
 </head>
-
 <body>
 
-<!-- ===== Sidebar ===== -->
-<div class="sidebar">
-    <h1>Bharathi <span>Designs</span></h1>
-    <p>Graphic Designer | Branding & Print</p>
-
-    <h3>Design Expertise</h3>
-    <ul>
-        <li>Fashion Logo Design</li>
-        <li>Brand Identity</li>
-        <li>Print Media</li>
-        <li>Marketing Creatives</li>
-        <li>Packaging Design</li>
-    </ul>
-
-    <h3>Color Palette</h3>
-    <div class="colors">
-        <div class="black"></div>
-        <div class="gold"></div>
-        <div class="white"></div>
-        <div class="red"></div>
-    </div>
-
-    <div class="color-info">
-        Black – Premium & Bold<br>
-        Gold – Luxury & Fashion<br>
-        White – Clean & Modern<br>
-        Red – Attraction & Power
-    </div>
-</div>
-
-<!-- ===== Main Content ===== -->
-<div class="main">
-
 <header>
-    <h2>Graphic Design Portfolio</h2>
-    <p>Creative visual solutions for brands & businesses</p>
+  <h1>TrendDrive</h1>
+  <input type="search" id="search" placeholder="Search cars..." aria-label="Search cars" oninput="filterCars()" />
 </header>
 
-<section class="portfolio">
+<main>
+  <section class="grid" id="carGrid" aria-live="polite" aria-relevant="all">
+    <!-- Cards get injected here -->
+  </section>
+</main>
 
-    <div class="card">
-        <img src="images/logo.jpg" alt="Logo Design">
-        <h4>Fashion Logo</h4>
-        <p>Luxury logo design for fashion branding.</p>
-    </div>
+<script>
+  const cars = [
+    {
+      name: "Tesla Model S Plaid",
+      description: "Ultra high-performance electric sedan with 396 miles range and 0-60 mph in under 2 seconds.",
+      price: "$130,000",
+      image: "https://cdn.motor1.com/images/mgl/0ANWm/s3/tesla-model-s-plaid.webp"
+    },
+    {
+      name: "Ford Mustang Mach-E",
+      description: "All-electric SUV blending Mustang heritage with futuristic electric power and smart tech.",
+      price: "$60,000",
+      image: "https://cdn.motor1.com/images/mgl/8rLwZ/s3/ford-mustang-mach-e.webp"
+    },
+    {
+      name: "Porsche Taycan",
+      description: "Luxury electric sports car combining Porsche's driving dynamics with zero emissions.",
+      price: "$110,000",
+      image: "https://cdn.motor1.com/images/mgl/kQ9Y2/s3/2020-porsche-taycan-turbo.jpg"
+    },
+    {
+      name: "BMW iX",
+      description: "BMW's flagship electric SUV with futuristic design, premium tech, and over 300 miles range.",
+      price: "$85,000",
+      image: "https://cdn.motor1.com/images/mgl/6O2xk/s3/bmw-ix-2022.webp"
+    },
+    {
+      name: "Audi e-tron GT",
+      description: "Audi's high-performance electric sedan combining luxury, style, and 238 miles range.",
+      price: "$105,000",
+      image: "https://cdn.motor1.com/images/mgl/JmN64/s3/audi-e-tron-gt.webp"
+    },
+    {
+      name: "Lucid Air",
+      description: "Breakthrough electric luxury sedan with incredible range up to 520 miles and advanced tech.",
+      price: "$160,000",
+      image: "https://cdn.motor1.com/images/mgl/VNYow/s3/lucid-air.webp"
+    }
+  ];
 
-    <div class="card">
-        <img src="images/visiting-card.jpg" alt="Visiting Card">
-        <h4>Visiting Card</h4>
-        <p>Front & back professional card design.</p>
-    </div>
+  const carGrid = document.getElementById('carGrid');
 
-    <div class="card">
-        <img src="images/pamphlet.jpg" alt="Pamphlet">
-        <h4>Pamphlet Design</h4>
-        <p>Promotional pamphlets for marketing.</p>
-    </div>
+  function createCard(car) {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.setAttribute('tabindex', '0');
+    card.innerHTML = `
+      <img src="${car.image}" alt="Photo of ${car.name}" loading="lazy" />
+      <div class="card-content">
+        <h2>${car.name}</h2>
+        <p title="${car.description}">${car.description}</p>
+        <div class="price">${car.price}</div>
+      </div>
+    `;
+    return card;
+  }
 
-    <div class="card">
-        <img src="images/poster.jpg" alt="Poster">
-        <h4>Poster</h4>
-        <p>Attractive poster for brand promotion.</p>
-    </div>
+  function displayCars(list) {
+    carGrid.innerHTML = '';
+    if(list.length === 0) {
+      carGrid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:#f0a500; font-size:1.2rem;">No matching cars found.</p>`;
+      return;
+    }
+    list.forEach(car => {
+      carGrid.appendChild(createCard(car));
+    });
+  }
 
-    <div class="card">
-        <img src="images/brochure.jpg" alt="Brochure">
-        <h4>Brochure</h4>
-        <p>Multi-page brochure layout design.</p>
-    </div>
+  function filterCars() {
+    const val = document.getElementById('search').value.toLowerCase();
+    const filtered = cars.filter(car => car.name.toLowerCase().includes(val));
+    displayCars(filtered);
+  }
 
-    <div class="card">
-        <img src="images/magazine.jpg" alt="Magazine">
-        <h4>Magazine Layout</h4>
-        <p>Front, back & inner pages design.</p>
-    </div>
-
-    <div class="card">
-        <img src="images/id-card.jpg" alt="ID Card">
-        <h4>ID Card</h4>
-        <p>Corporate identity card design.</p>
-    </div>
-
-    <div class="card">
-        <img src="images/box.jpg" alt="Box Design">
-        <h4>Box & Packaging</h4>
-        <p>Creative box & packaging design.</p>
-    </div>
-
-</section>
-
-<footer>
-    © 2025 Bharathi | Graphic Designer Portfolio
-</footer>
-
-</div>
+  // Initial display
+  displayCars(cars);
+</script>
 
 </body>
 </html>
